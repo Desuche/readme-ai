@@ -64,6 +64,11 @@ Streamlines documentation creation and maintenance, enhancing developer producti
 
 ---
 
+## 🍴 Fork
+***Purpose***
+
+This fork adds compatibility with Azure OpenAI api. At the time of forking, the upstream project supports the direct OpenAI api but is mildly incompatible with the Microsoft Azure api for accessing OpenAI models. This fork seeks to remedy that, using the HKBU ChatGPT endpoint as a default azure api endpoint, with the option for users to set alternate endpoints for their respective azure deployments.
+
 ## 👾 Demo
 
 **Standard CLI Usage:**
