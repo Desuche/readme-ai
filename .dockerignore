@@ -20,6 +20,9 @@ tests/
 setup/
 scripts/
 
+# Results
+results/
+
 # Jupyter notebooks
 notebooks/
 

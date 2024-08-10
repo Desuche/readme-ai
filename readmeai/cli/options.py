@@ -185,7 +185,7 @@ model = click.option(
 output = click.option(
     "-o",
     "--output",
-    default="readme-ai.md",
+    default="results/readme-ai.md",
     help="Output file name for your README file. Default name is 'readme-ai.md'.",
 )
 

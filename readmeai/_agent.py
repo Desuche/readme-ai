@@ -127,7 +127,9 @@ async def readme_generator(conf: ConfigLoader, output_file: Path) -> None:
         readme_md = MarkdownBuilder(
             conf, dependencies, summaries, temp_dir
         ).build()
-        FileHandler().write(output_file, readme_md)
+        fileHandler = FileHandler()
+        fileHandler.ensure_results_directory_exists()
+        fileHandler.write(output_file, readme_md)
         _logger.info("README generation process completed successfully!")
         _logger.info(f"README.md file saved to: {output_file}")
         _logger.info("Share it @ github.com/eli64s/readme-ai/discussions")

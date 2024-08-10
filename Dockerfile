@@ -4,7 +4,7 @@ FROM --platform=${BUILDPLATFORM} python:3.10-slim-buster
 # Set working directory
 WORKDIR /app
 
-COPY req.txt requirements.txt
+COPY requirements.txt requirements.txt
 
 # Install pip requirements
 RUN pip install -r requirements.txt

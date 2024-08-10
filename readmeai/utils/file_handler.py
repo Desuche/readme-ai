@@ -5,6 +5,7 @@ File I/O factory class to read and write files.
 import functools
 import json
 import sys
+import os
 from pathlib import Path
 from typing import Any, Callable, Dict, Union
 
@@ -70,6 +71,9 @@ class FileHandler:
             raise ValueError(f"Unsupported action type: {action_type}")
 
         return action
+    
+    def ensure_results_directory_exists(self) -> None:
+        os.makedirs("results", exist_ok=True)
 
     @staticmethod
     @functools.lru_cache(maxsize=100)

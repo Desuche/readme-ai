@@ -60,6 +60,9 @@ readmeai/config/settings/quickstart_wip.toml
 readmeai/config/settings/quickstart.toml
 readmeai/utils/file_cleaner.py
 
+# Results
+results/
+
 # Github Actions
 .github/workflows/ci.yml
 
