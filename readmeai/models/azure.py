@@ -20,38 +20,32 @@ from readmeai.core.models import BaseModelHandler
 from readmeai.models.tokens import token_handler
 from readmeai.utils.text_cleaner import clean_response
 
-_localhost = "http://localhost:11434/v1/"
 
 
 class AzureOpenAIHandler(BaseModelHandler):
     """Azure OpenAI API LLM implementation."""
 
     def __init__(self, config_loader: ConfigLoader) -> None:
-        """Initialize OpenAI API LLM handler."""
+        """Initialize Azure OpenAI API LLM handler."""
         super().__init__(config_loader)
         self._model_settings()
 
     def _model_settings(self):
-        """Set default values for OpenAI API."""
+        """Set default values for Azure OpenAI API."""
         self.model = self.config.llm.model
         self.temperature = self.config.llm.temperature
         self.tokens = self.config.llm.tokens
         self.top_p = self.config.llm.top_p
 
-        if self.config.llm.api == llms.OPENAI.name:
-            self.endpoint = self.config.llm.base_url
-            self.client = openai.OpenAI(
-                api_key=os.environ.get("OPENAI_API_KEY")
-            )
-        elif self.config.llm.api == llms.OLLAMA.name:
-            self.endpoint = f"{_localhost}chat/completions"
-            self.client = openai.OpenAI(
-                base_url=_localhost, api_key=llms.OLLAMA.name
-            )
-        self.headers = {"Authorization": f"Bearer {self.client.api_key}"}
+        
+        self.endpoint = self.config.llm.base_url
+        self.client = openai.OpenAI(
+            api_key=os.environ.get("AZURE_API_KEY")
+        )
+        self.headers = {"api-key": self.client.api_key}
 
     async def _build_payload(self, prompt: str, tokens: int) -> dict:
-        """Build payload for POST request to OpenAI API."""
+        """Build payload for POST request to Azure OpenAI API."""
         return {
             "messages": [
                 {
@@ -84,7 +78,7 @@ class AzureOpenAIHandler(BaseModelHandler):
         tokens: int,
         raw_files: List[Tuple[str, str]] = None,
     ) -> Tuple[str, str]:
-        """Processes OpenAI API LLM responses and returns generated text."""
+        """Processes Azure OpenAI API LLM responses and returns generated text."""
         try:
             prompt = await token_handler(self.config, index, prompt, tokens)
             parameters = await self._build_payload(prompt, tokens)
