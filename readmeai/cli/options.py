@@ -70,6 +70,11 @@ def prompt_for_image(
     else:
         raise click.BadParameter(f"Invalid image provided: {value}")
 
+def get_base_url_from_api(api: str) -> str:
+    if api == 'AZURE':
+        return "https://chatgpt.hkbu.edu.hk/general/rest/deployments/gpt-35-turbo/chat/completions/?api-version=2024-02-15-preview"
+    else:
+        return "https://api.openai.com/v1/chat/completions"
 
 alignment = click.option(
     "-a",
@@ -87,6 +92,7 @@ api = click.option(
     default=None,
     help="""LLM service to use for generating the README.md file. The following services are currently supported:\n
     - OPENAI  # OpenAI - gpt-3.5-turbo \n
+    - AZURE   # Azure OpenAI - gpt-3.5-turbo \n
     - OLLAMA  # Ollama - llama2 \n
     - GEMINI  # Google Gemini API - gemini-pro \n
     - OFFLINE # Offline mode - no LLM service used \n
@@ -122,7 +128,7 @@ badge_style = click.option(
 base_url = click.option(
     "--base-url",
     type=str,
-    default="https://api.openai.com/v1/chat/completions",
+    default=lambda: get_base_url_from_api(click.get_current_context().params.get("api", None)),
     help="Base URL for the LLM API service used to generate text for the README.md file.",
 )
 
