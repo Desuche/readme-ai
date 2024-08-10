@@ -51,6 +51,13 @@ def readme_agent(
         conf = ConfigLoader()
         api, model = get_environment(api, model)
         conf.config.api.rate_limit = rate_limit
+        if not(base_url):
+            if api.lower() == "azure":
+                base_url = conf.config.llm.default_url_azure
+            elif api.lower() == "openai":
+                base_url = conf.config.llm.default_url_openai
+            else:   
+                base_url = conf.config.llm.base_url
         conf.config.llm = conf.config.llm.copy(
             update={
                 "api": api,

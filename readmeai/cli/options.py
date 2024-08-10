@@ -70,11 +70,6 @@ def prompt_for_image(
     else:
         raise click.BadParameter(f"Invalid image provided: {value}")
 
-def get_base_url_from_api(api: str) -> str:
-    if api == 'AZURE':
-        return "https://chatgpt.hkbu.edu.hk/general/rest/deployments/gpt-35-turbo/chat/completions/?api-version=2024-02-15-preview"
-    else:
-        return "https://api.openai.com/v1/chat/completions"
 
 alignment = click.option(
     "-a",
@@ -128,7 +123,7 @@ badge_style = click.option(
 base_url = click.option(
     "--base-url",
     type=str,
-    default=lambda: get_base_url_from_api(click.get_current_context().params.get("api", None)),
+    default=None,
     help="Base URL for the LLM API service used to generate text for the README.md file.",
 )
 

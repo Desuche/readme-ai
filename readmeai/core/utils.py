@@ -19,6 +19,7 @@ class SecretKey(str, Enum):
     OLLAMA_HOST = "OLLAMA_HOST"
     OPENAI_API_KEY = "OPENAI_API_KEY"
     GOOGLE_API_KEY = "GOOGLE_API_KEY"
+    AZURE_API_KEY = "AZURE_API_KEY"
 
 
 def _set_offline(message: str) -> tuple:
@@ -33,12 +34,14 @@ def get_environment(llm_api: str = "", llm_model: str = "") -> tuple:
         llms.OPENAI.name: "gpt-3.5-turbo",
         llms.OLLAMA.name: "mistral",
         llms.GEMINI.name: "gemini-pro",
+        llms.AZURE.name: "gpt-3.5-turbo",
     }
 
     env_keys = {
         llms.OPENAI.name: SecretKey.OPENAI_API_KEY.value,
         llms.OLLAMA.name: SecretKey.OLLAMA_HOST.value,
         llms.GEMINI.name: SecretKey.GOOGLE_API_KEY.value,
+        llms.AZURE.name: SecretKey.AZURE_API_KEY.value
     }
 
     if llm_api and llm_api not in env_keys:
@@ -65,6 +68,15 @@ def get_environment(llm_api: str = "", llm_model: str = "") -> tuple:
     ):
         return _set_offline(
             "GOOGLE_API_KEY not found in environment. Switching to offline mode."
+        )
+
+    # If AZURE_API_KEY does not exist in env when --api AZURE is set
+    if (
+        llm_api == llms.AZURE.name
+        and SecretKey.AZURE_API_KEY.value not in os.environ
+    ):
+        return _set_offline(
+            "AZURE_API_KEY not found in environment. Switching to offline mode."
         )
 
     # If no specific API is provided or the provided API is valid

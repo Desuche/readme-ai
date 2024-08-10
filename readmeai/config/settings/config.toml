@@ -22,6 +22,8 @@ repository = "https://github.com/eli64s/readme-ai"
 [llm]
 api = "openai"
 base_url = "https://api.openai.com/v1/chat/completions"
+default_url_openai = "https://api.openai.com/v1/chat/completions"
+default_url_azure = "https://chatgpt.hkbu.edu.hk/general/rest/deployments/gpt-35-turbo/chat/completions/?api-version=2024-02-15-preview"
 context_window = 4000
 encoder = "cl100k_base"
 model = "gpt-3.5-turbo"
