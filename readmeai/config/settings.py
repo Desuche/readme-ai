@@ -102,6 +102,8 @@ class ModelSettings(BaseModel):
 
     api: Optional[str]
     base_url: Optional[HttpUrl]
+    default_url_openai: Optional[HttpUrl]
+    default_url_azure: Optional[HttpUrl]
     context_window: Optional[int]
     encoder: Optional[str]
     model: Optional[str]

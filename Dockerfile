@@ -4,12 +4,18 @@ FROM --platform=${BUILDPLATFORM} python:3.10-slim-buster
 # Set working directory
 WORKDIR /app
 
+COPY req.txt requirements.txt
+
+# Install pip requirements
+RUN pip install -r requirements.txt
+
 # Set environment variable for Git Python
 ENV GIT_PYTHON_REFRESH=quiet
 
 # Install system dependencies and clean up apt cache
 RUN apt-get update && apt-get install -y git \
     && rm -rf /var/lib/apt/lists/*
+
 
 # Create a non-root user with a specific UID and GID (i.e. 1000 in this case)
 RUN groupadd -r tempuser -g 1000 && \
@@ -26,9 +32,8 @@ USER tempuser
 # Add the directory where pip installs user scripts to the PATH
 ENV PATH=/home/tempuser/.local/bin:$PATH
 
-# Install the readmeai package from PyPI with a pinned version
-RUN pip install --no-cache-dir --user --upgrade readmeai
+COPY . .
 
 # Set the command to run the CLI
-ENTRYPOINT ["readmeai"]
-CMD ["--help"]
+ENTRYPOINT ["python3"] 
+CMD ["-m", "readmeai.cli.main", "-r", "https://github.com/eli64s/readme-ai"]
