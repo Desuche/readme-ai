@@ -52,6 +52,7 @@ class ModelOptions(str, Enum):
     OLLAMA = "OLLAMA"
     OPENAI = "OPENAI"
     GEMINI = "GEMINI"
+    AZURE = "AZURE"
 
 
 def prompt_for_image(

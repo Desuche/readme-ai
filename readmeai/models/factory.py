@@ -6,6 +6,7 @@ from readmeai._exceptions import UnsupportedServiceError
 from readmeai.cli.options import ModelOptions as llms
 from readmeai.config.settings import ConfigLoader
 from readmeai.core.models import BaseModelHandler
+from readmeai.models.azure import AzureOpenAIHandler
 from readmeai.models.gemini import GeminiHandler
 from readmeai.models.offline import OfflineHandler
 from readmeai.models.openai import OpenAIHandler
@@ -19,6 +20,7 @@ class ModelFactory:
         llms.OLLAMA.value: OpenAIHandler,
         llms.OPENAI.value: OpenAIHandler,
         llms.GEMINI.value: GeminiHandler,
+        llms.AZURE.value: AzureOpenAIHandler,
     }
 
     @staticmethod
